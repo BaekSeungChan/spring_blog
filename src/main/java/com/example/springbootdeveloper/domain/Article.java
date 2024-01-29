@@ -1,10 +1,14 @@
 package com.example.springbootdeveloper.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Article {
     @Id // id 필드를 기본키로 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,17 +27,4 @@ public class Article {
         this.content = content;
     }
 
-    protected Article(){
-        // 빌더 패턴으로 객체 생성
-    }
-
-
-    // 게터
-    public String getTitle(){
-        return this.title;
-    }
-
-    public String getContent(){
-        return this.content;
-    }
 }
