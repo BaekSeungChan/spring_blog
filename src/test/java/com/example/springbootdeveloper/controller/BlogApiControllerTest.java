@@ -21,7 +21,9 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest // 테스트용 애플리케이션 컨텍스트
@@ -83,4 +85,31 @@ class BlogApiControllerTest {
     // writeValueAsString() 메서드를 사용해서 객체를 JSON으로 직렬화해줍니다. 그 이후에는 MockMvc를 사용해 HTTP 메서드, URL, 요청 본문, 요청 타입 등을 설정한 뒤
     // 설정한 내용을 바탕으로 테스트 요청을 보냅니다. contentType() 메서드는 요청을 보낼 때 JSON< XML 등 다양한 타입 중 하나를 골라 요청을 보냅니다. 여기에서 JSON 타입의 요청을 보낸다고 명시했습니다.
     // assertThat() 메서드로는 블로그 글ㄹ의 개수가 1인지 확인합니다.
+
+
+    @DisplayName("findAllAricles : 블로그 글 목록 조회에 성공한다.")
+    @Test
+    public void findAllArticles() throws Exception {
+        // given
+        final String url = "/api/articles/get";
+        final String title = "title";
+        final String content = "content";
+
+        blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+
+        //when
+        final ResultActions resultActions = mockMvc.perform(get(url)
+                .accept(MediaType.APPLICATION_JSON));
+
+        //then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].content").value(content))
+                .andExpect(jsonPath("$[0].title").value(title));
+    }
+
 }
