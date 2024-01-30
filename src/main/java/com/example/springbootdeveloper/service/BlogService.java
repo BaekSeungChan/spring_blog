@@ -30,6 +30,6 @@ public class BlogService {
     }
 
     public void deleteId(long id){
-        blogRepository.findById(id);
+        blogRepository.deleteById(id);
     }
 }
