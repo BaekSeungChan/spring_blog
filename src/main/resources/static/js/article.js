@@ -39,3 +39,27 @@ if (modifyButton) {
             });
     });
 }
+
+
+const createButton = document.getElementById("create-btn")
+
+if (createButton) {
+    createButton.addEventListener("click", (event) => {
+        fetch("/api/articles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title: document.getElementById("title").value,
+                content: document.getElementById("content").value,
+            }),
+        })
+            .then(response => response.json()) // 응답을 JSON 형태로 변환
+            .then(data => {
+                alert("등록 완료되었습니다.");
+                location.replace("/articles"); // 성공 후 페이지 이동
+            })
+            .catch(error => console.error('Error:', error)); // 오류 처리 추가
+    });
+}
