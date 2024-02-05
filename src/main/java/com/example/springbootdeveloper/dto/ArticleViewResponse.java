@@ -2,19 +2,20 @@ package com.example.springbootdeveloper.dto;
 
 import com.example.springbootdeveloper.domain.Article;
 import lombok.Data;
-import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Data
-public class ArticleResponse {
+public class ArticleViewResponse {
     private Long id;
     private String title;
     private String content;
     private LocalDateTime createAt; // 필드 추가
 
     // 생성자에 createAt 파라미터 추가
-    public ArticleResponse(Article article) {
+    public ArticleViewResponse(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
         this.content = article.getContent();

@@ -2,7 +2,7 @@ package com.example.springbootdeveloper.controller;
 
 import com.example.springbootdeveloper.domain.Article;
 import com.example.springbootdeveloper.dto.AddArticleRequest;
-import com.example.springbootdeveloper.dto.ArticleResponse;
+import com.example.springbootdeveloper.dto.ArticleViewResponse;
 import com.example.springbootdeveloper.dto.UpdateArtileRequest;
 import com.example.springbootdeveloper.service.BlogService;
 import lombok.RequiredArgsConstructor;
@@ -30,10 +30,10 @@ public class BlogApiController{
     }
 
     @GetMapping("/articles/get")
-    public ResponseEntity<List<ArticleResponse>> findAllArticles(){
-        List<ArticleResponse> articles = blogService.findAll()
+    public ResponseEntity<List<ArticleViewResponse>> findAllArticles(){
+        List<ArticleViewResponse> articles = blogService.findAll()
                 .stream()
-                .map(ArticleResponse::new)
+                .map(ArticleViewResponse::new)
                 .toList();
 
         return ResponseEntity.ok()
@@ -41,10 +41,10 @@ public class BlogApiController{
     }
 
     @GetMapping("/articles/{id}")
-    public ResponseEntity<ArticleResponse> findArticle(@PathVariable long id){
+    public ResponseEntity<ArticleViewResponse> findArticle(@PathVariable long id){
         Article article = blogService.findById(id);
 
-        return ResponseEntity.ok().body(new ArticleResponse(article));
+        return ResponseEntity.ok().body(new ArticleViewResponse(article));
     }
 
     @DeleteMapping("/articles/{id}")
